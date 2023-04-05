@@ -1,5 +1,7 @@
 package com.minsait.emprestimos.service;
 
+import com.minsait.emprestimos.exception.ClientCantBeNullException;
+import com.minsait.emprestimos.exception.ClientNotFoundException;
 import com.minsait.emprestimos.mapper.CostumerMapper;
 import com.minsait.emprestimos.model.Client;
 import com.minsait.emprestimos.repository.ClientRepository;
@@ -21,15 +23,26 @@ public class ClientService {
     }
 
     public Client findByCpf(String cpf) {
-        return clientReposity.findByCpf(cpf);
+        Client client = clientReposity.findByCpf(cpf);
+
+        if(client != null){
+            return client;
+        }else {
+            throw new ClientNotFoundException("Client not fount");
+        }
+        // return clientReposity.findByCpf(cpf);
     }
 
     @Transactional
     public Client save(ClientPostRequestBody clientPostRequestBody) {
         System.out.println(clientPostRequestBody.toString());
         Client client = CostumerMapper.INSTANCE.toClient(clientPostRequestBody);
+        if(client != null){
+            return clientReposity.save(client);
+        }else {
+            throw new ClientCantBeNullException("Client can't be null");
+        }
     //   return clientReposity.save(CostumerMapper.INSTANCE.toClient(clientPostRequestBody));
-        return clientReposity.save(client);
     }
 
     public void delete(String cpf) {
