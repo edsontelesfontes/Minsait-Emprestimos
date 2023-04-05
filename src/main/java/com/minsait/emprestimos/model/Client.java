@@ -1,7 +1,6 @@
 package com.minsait.emprestimos.model;
 
 import com.minsait.emprestimos.enumeration.EnumClientType;
-import com.minsait.emprestimos.exception.ClientWithoutLimit;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +14,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Costumer {
+public class Client {
 
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)

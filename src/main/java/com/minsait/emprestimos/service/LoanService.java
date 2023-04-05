@@ -1,14 +1,13 @@
 package com.minsait.emprestimos.service;
 
-import com.minsait.emprestimos.enumeration.EnumClientType;
 import com.minsait.emprestimos.exception.ClientNotFoundException;
 import com.minsait.emprestimos.exception.ClientWithoutLimit;
 import com.minsait.emprestimos.exception.LoanCantBeEqualsZeroExeception;
 import com.minsait.emprestimos.exception.LoanNotFoundException;
 import com.minsait.emprestimos.mapper.LoanMapper;
-import com.minsait.emprestimos.model.Costumer;
+import com.minsait.emprestimos.model.Client;
 import com.minsait.emprestimos.model.Loan;
-import com.minsait.emprestimos.repository.CostumerRepository;
+import com.minsait.emprestimos.repository.ClientRepository;
 import com.minsait.emprestimos.repository.LoanRepository;
 import com.minsait.emprestimos.resources.LoanPostRequestBody;
 import jakarta.transaction.Transactional;
@@ -22,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoanService {
     private final LoanRepository loanRepository;
-    private final CostumerRepository costumerRepository;
+    private final ClientRepository clientRepository;
 
     public List<Loan> findAllLoanByCpf(String cpf) {
         List<Loan> loans = loanRepository.findByCpf(cpf);
@@ -35,9 +34,9 @@ public class LoanService {
 
     public Loan findLoanById(String cpf, Long id) {
         Loan loan = loanRepository.findByIdAndCpf(id, cpf);
-        if(loan != null){
+        if (loan != null) {
             return loanRepository.findByIdAndCpf(id, cpf);
-        }else{
+        } else {
             throw new LoanNotFoundException("Loan not found by id ");
         }
 
@@ -45,14 +44,14 @@ public class LoanService {
 
     @Transactional
     public Loan saveLoan(String cpf, LoanPostRequestBody loanPostRequestBody) {
-        Costumer costumer = costumerRepository.findByCpf(cpf);
+        Client client = clientRepository.findByCpf(cpf);
         List<Loan> loans = loanRepository.findByCpf(cpf);
-        loanPostRequestBody.setEnumClientType(costumer.getClientType());
+        loanPostRequestBody.setEnumClientType(client.getClientType());
 
-        if (costumer != null && getLimit(cpf, loanPostRequestBody.getLoanAmount())) {
+        if (client != null && getLimit(cpf, loanPostRequestBody.getLoanAmount())) {
             Loan loanToSave = loanWithTax(LoanMapper.INSTANCE.toLoan(loanPostRequestBody), loans.size());
             loanToSave.setCpf(cpf);
-            loanToSave.setEnumClientType(costumer.getClientType());
+            loanToSave.setEnumClientType(client.getClientType());
             System.out.println(loanToSave.toString());
             return loanRepository.save(loanToSave);
         } else {
@@ -78,15 +77,15 @@ public class LoanService {
 
     public BigDecimal getTotalLoan(String cpf) {
         List<Loan> allLoans = loanRepository.findByCpf(cpf);
-        Costumer costumer = costumerRepository.findByCpf(cpf);
+        Client client = clientRepository.findByCpf(cpf);
         BigDecimal sum = new BigDecimal(0);
 
         for (Loan loans : allLoans) {
-            if (loans.getLoanAmount().compareTo(loans.getLoanAmount()) >= 0) {
+
                 System.out.println(loans.getLoanAmount());
                 System.out.println("Caiu aqui no for each");
                 sum = sum.add(loans.getLoanAmount());
-            }
+
 
         }
         System.out.println("esse é o soma " + sum);
@@ -94,17 +93,15 @@ public class LoanService {
     }
 
     public Boolean getLimit(String cpf, BigDecimal loanAmout) {
-        Costumer costumer = costumerRepository.findByCpf(cpf);
+        Client client = clientRepository.findByCpf(cpf);
 
         BigDecimal totalInLoan = getTotalLoan(cpf);
-        BigDecimal salary = costumer.getSalary().multiply(new BigDecimal(10));
+        BigDecimal salary = client.getSalary().multiply(new BigDecimal(10));
 
-        if (salary.compareTo(loanAmout) <= 0 && loanAmout.compareTo(totalInLoan) <= 0) {
+        if (loanAmout.compareTo(salary) <= 0 && totalInLoan.compareTo(loanAmout) < 0) {
             return true;
         } else
             throw new ClientWithoutLimit("No limit for a new loan !");
-
     }
-
 
 }

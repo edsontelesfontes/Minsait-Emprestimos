@@ -1,9 +1,6 @@
 package com.minsait.emprestimos.mapper;
 
-import com.minsait.emprestimos.model.Costumer;
 import com.minsait.emprestimos.model.Loan;
-import com.minsait.emprestimos.resources.ClientPostRequestBody;
-import com.minsait.emprestimos.resources.ClientPutRequestBody;
 import com.minsait.emprestimos.resources.LoanPostRequestBody;
 import com.minsait.emprestimos.resources.LoanPutRequestBody;
 import org.mapstruct.Mapper;
