@@ -12,7 +12,7 @@ public interface CostumerMapper {
     public static final CostumerMapper INSTANCE = Mappers.getMapper(CostumerMapper.class);
     public abstract Client toClient(ClientPostRequestBody clientPostRequestBody);
     public abstract Client toClient(ClientPutRequestBody ClientPutRequestBody);
-    public abstract Client toClient(ClientPutRequestBody ClientPutRequestBody, @MappingTarget Client client);
+    public abstract Client toClient(@MappingTarget Client client, ClientPutRequestBody ClientPutRequestBody);
 
 
 
