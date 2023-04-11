@@ -32,8 +32,7 @@ public class ClientPostRequestBody {
     @NotNull(message = "Client Address can't be null")
     private AddressPostRequestBody address;
     @NotNull(message = "Client salary can't be null")
-
-    @DecimalMin(value = "1320.0", inclusive = false)
+    @DecimalMin(value = "1319.0", inclusive = false)
     private BigDecimal salary;
 
     @NotNull(message = "Client type can't be null")

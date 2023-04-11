@@ -77,7 +77,7 @@ public class LoanService {
 
     public BigDecimal getTotalLoan(String cpf) {
         List<Loan> allLoans = loanRepository.findByCpf(cpf);
-        Client client = clientRepository.findByCpf(cpf);
+
         BigDecimal sum = new BigDecimal(0);
 
         for (Loan loans : allLoans) {

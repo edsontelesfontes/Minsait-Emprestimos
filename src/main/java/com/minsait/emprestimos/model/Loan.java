@@ -31,7 +31,6 @@ public class Loan {
 
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate startDate = LocalDate.now();
-    //@DateTimeFormat(pattern = "dd/MM/yyyy")
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate endDate;
 
