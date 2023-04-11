@@ -1,17 +1,20 @@
 package com.minsait.emprestimos.enumeration;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 
 public enum EnumClientType {
-    BRONZE(3) {
+    BRONZE(3, "BRONZE") {
         @Override
         public BigDecimal totalLoan(BigDecimal totalAmount, Integer totalLoans) {
             BigDecimal tax = new BigDecimal(1.8);
             return totalAmount.multiply(tax, MathContext.DECIMAL32);
         }
     },
-    PRATA(2) {
+    PRATA(2, "PRATA") {
         @Override
         public BigDecimal totalLoan(BigDecimal totalAmount, Integer totalLoans) {
             BigDecimal tax = BigDecimal.ZERO;
@@ -24,7 +27,7 @@ public enum EnumClientType {
         }
 
     },
-    OURO(1) {
+    OURO(1, "OURO") {
         @Override
         public BigDecimal totalLoan(BigDecimal totalAmount, Integer totalLoans) {
             BigDecimal tax;
@@ -40,10 +43,16 @@ public enum EnumClientType {
 
     private final int digit;
 
-    EnumClientType(int digit) {
-        this.digit = digit;
+    private final String type;
+
+    public String getType() {
+        return type;
     }
 
+    EnumClientType(int digit, String type) {
+        this.digit = digit;
+        this.type = type;
+    }
 
     public abstract BigDecimal totalLoan(BigDecimal totalAmount, Integer totalLoans);
 

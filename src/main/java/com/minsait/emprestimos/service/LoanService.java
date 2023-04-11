@@ -9,6 +9,7 @@ import com.minsait.emprestimos.model.Client;
 import com.minsait.emprestimos.model.Loan;
 import com.minsait.emprestimos.repository.ClientRepository;
 import com.minsait.emprestimos.repository.LoanRepository;
+import com.minsait.emprestimos.resources.LoanGetRequestBody;
 import com.minsait.emprestimos.resources.LoanPostRequestBody;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -22,20 +23,19 @@ import java.util.List;
 public class LoanService {
     private final LoanRepository loanRepository;
     private final ClientRepository clientRepository;
-
-    public List<Loan> findAllLoanByCpf(String cpf) {
+    public List<LoanGetRequestBody> findAllLoanByCpf(String cpf) {
         List<Loan> loans = loanRepository.findByCpf(cpf);
         if (loans != null) {
-            return loans;
+            return LoanMapper.INSTANCE.toLoanGetRequestBody(loans);
         } else {
             throw new LoanNotFoundException("Loan(s) not found in CPF: ", cpf);
         }
     }
 
-    public Loan findLoanById(String cpf, Long id) {
+    public LoanGetRequestBody findLoanById(String cpf, Long id) {
         Loan loan = loanRepository.findByIdAndCpf(id, cpf);
         if (loan != null) {
-            return loanRepository.findByIdAndCpf(id, cpf);
+            return LoanMapper.INSTANCE.toLoanGetRequestBody(loanRepository.findByIdAndCpf(id, cpf));
         } else {
             throw new LoanNotFoundException("Loan not found by id ");
         }
@@ -98,10 +98,10 @@ public class LoanService {
         BigDecimal totalInLoan = getTotalLoan(cpf);
         BigDecimal salary = client.getSalary().multiply(new BigDecimal(10));
 
-        if (loanAmout.compareTo(salary) <= 0 && totalInLoan.compareTo(loanAmout) < 0) {
+        if (loanAmout.compareTo(salary) < 0 && totalInLoan.compareTo(loanAmout) < 0) {
             return true;
         } else
             throw new ClientWithoutLimit("No limit for a new loan !");
     }
+    }
 
-}

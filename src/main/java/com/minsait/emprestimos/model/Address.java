@@ -1,6 +1,7 @@
 package com.minsait.emprestimos.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,6 @@ public class Address {
     @Column(nullable = false)
     private Integer number;
     @Column(nullable = false)
-    private String cep;
+    private String zipCode;
 
 }

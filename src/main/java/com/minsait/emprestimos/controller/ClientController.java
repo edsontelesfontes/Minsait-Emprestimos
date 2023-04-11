@@ -1,9 +1,11 @@
 package com.minsait.emprestimos.controller;
 
 import com.minsait.emprestimos.model.Client;
+import com.minsait.emprestimos.resources.ClientGetRequestBody;
 import com.minsait.emprestimos.resources.ClientPostRequestBody;
 import com.minsait.emprestimos.resources.ClientPutRequestBody;
 import com.minsait.emprestimos.service.ClientService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,17 +21,17 @@ public class ClientController {
     private final ClientService clientService;
 
     @GetMapping
-    public ResponseEntity<List<Client>> findAll() {
+    public ResponseEntity<List<ClientGetRequestBody>> findAll() {
         return ResponseEntity.ok(clientService.findAll());
     }
 
     @GetMapping(path = "/{cpf}")
-    public ResponseEntity<Client> findByCpf(@PathVariable String cpf) {
+    public ResponseEntity<ClientGetRequestBody> findByCpf(@PathVariable String cpf) {
         return ResponseEntity.ok(clientService.findByCpf(cpf));
     }
 
     @PostMapping
-    public ResponseEntity<Client> save(@RequestBody ClientPostRequestBody clientPostRequestBody){
+    public ResponseEntity<Client> save(@RequestBody @Valid ClientPostRequestBody clientPostRequestBody){
         return ResponseEntity.ok(clientService.save(clientPostRequestBody));
     }
 
