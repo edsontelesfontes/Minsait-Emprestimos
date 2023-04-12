@@ -146,8 +146,8 @@ Deletando um empréstimo através do CPF e do ID.
 ```
 DELETE:/api/v1/clientes/{cpf}/emprestimos/{id}
 ```
-
-3. Buscando todos os tipos disponíveis de enum/relacionamento do cliente para ser consumido no front.
+## 3ª Etapa - Buscando o tipo de relacionamento do cliente
+1. Buscando todos os tipos disponíveis de enum/relacionamento do cliente para ser consumido no front.
 ```
 GET:/api/v1/clientes/enum
 ```
