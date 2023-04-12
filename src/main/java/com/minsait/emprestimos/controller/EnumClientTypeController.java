@@ -23,7 +23,5 @@ public class EnumClientTypeController {
         return ResponseEntity.ok(Arrays.stream(EnumClientType.values())
                 .map(EnumClientType::name)
                 .collect(Collectors.toList()));
-
-        //return ResponseEntity.ok(enumClientTypeService.findAll());
     }
 }

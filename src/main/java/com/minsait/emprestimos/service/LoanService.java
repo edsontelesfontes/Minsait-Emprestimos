@@ -24,6 +24,7 @@ import java.util.List;
 public class LoanService {
     private final LoanRepository loanRepository;
     private final ClientRepository clientRepository;
+
     public List<LoanGetRequestBody> findAllLoanByCpf(String cpf) {
         List<Loan> loans = loanRepository.findByCpf(cpf);
         if (loans != null) {
@@ -82,14 +83,8 @@ public class LoanService {
         BigDecimal sum = new BigDecimal(0, MathContext.DECIMAL32);
 
         for (Loan loans : allLoans) {
-
-                System.out.println(loans.getLoanAmount());
-                System.out.println("Caiu aqui no for each");
-                sum = sum.add(loans.getLoanAmount());
-
-
+            sum = sum.add(loans.getLoanAmount());
         }
-        System.out.println("esse é o soma " + sum);
         return sum;
     }
 
@@ -106,5 +101,6 @@ public class LoanService {
         } else {
             throw new ClientWithoutLimit("No limit for a new loan !");
         }
-    }}
+    }
+}
 

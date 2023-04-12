@@ -27,26 +27,25 @@ public class ClientService {
 
     public ClientGetRequestBody findByCpf(String cpf) {
         Client client = clientReposity.findByCpf(cpf);
-        if(client != null){
-            return  ClientMapper.INSTANCE.toClientGetResposne(client);
-        }else{
+        if (client != null) {
+            return ClientMapper.INSTANCE.toClientGetResposne(client);
+        } else {
             throw new ClientNotFoundException("Client not found");
         }
     }
 
     @Transactional
     public Client save(ClientPostRequestBody clientPostRequestBody) {
-            Client client =   clientReposity.findByCpf(clientPostRequestBody.getCpf());
-            if(client != null){
-                throw new ClientAlreadyExitsException("Unavailable to save, client already exists ", client.getCpf());
-            }
+        Client client = clientReposity.findByCpf(clientPostRequestBody.getCpf());
+        if (client != null) {
+            throw new ClientAlreadyExitsException("Unavailable to save, client already exists ", client.getCpf());
+        }
 
-
-            if (clientPostRequestBody != null) {
-                return clientReposity.save(ClientMapper.INSTANCE.toClient(clientPostRequestBody));
-            } else {
-                throw new ClientCantBeNullException("Client can't be null");
-            }
+        if (clientPostRequestBody != null) {
+            return clientReposity.save(ClientMapper.INSTANCE.toClient(clientPostRequestBody));
+        } else {
+            throw new ClientCantBeNullException("Client can't be null");
+        }
 
     }
 
@@ -57,7 +56,6 @@ public class ClientService {
     @Transactional
     public Client replace(String cpf, ClientPutRequestBody clientPutRequestBody) {
         Client clientSaved = ClientMapper.INSTANCE.toClient(findByCpf(cpf));
-        System.out.println(clientPutRequestBody.toString());
         Client client = ClientMapper.INSTANCE.updateClient(clientPutRequestBody, clientSaved);
         return clientReposity.save(client);
     }

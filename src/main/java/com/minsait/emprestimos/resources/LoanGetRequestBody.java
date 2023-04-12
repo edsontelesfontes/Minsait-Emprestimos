@@ -24,6 +24,8 @@ public class LoanGetRequestBody {
 
     private EnumClientType enumClientType;
 
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate startDate;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate endDate;
 }
