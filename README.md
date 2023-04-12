@@ -72,7 +72,7 @@ http://localhost:8080/swagger-ui/index.html
 <img src = "https://imgur.com/hWjB2z5.png">
 
 ---- 
-### 1° Etapa - Cadastramento de usuarios.
+### 1° Etapa - Cadastramento de clientes.
 
 1. Adicionando um cliente
 
@@ -93,12 +93,12 @@ POST:/api/v1/clientes
   "clientType": "BRONZE"
 }
 ```
-2. Consultando a lista de usuários.
+2. Consultando a lista de clientes.
 ```
 GET:/api/v1/clientes/
 ```
 
-3. Consultando a lista de usuários com CPF do banco de dados.
+3. Consultando a lista de clientes com CPF do banco de dados.
 ```
 GET:/api/v1/clientes/{cpf}
 ```
