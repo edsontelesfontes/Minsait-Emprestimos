@@ -1,5 +1,6 @@
 package com.minsait.emprestimos.resources;
 
+import com.minsait.emprestimos.validation.constraints.Phone;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +19,7 @@ public class AddressPostRequestBody {
     private String street;
     @Min(value = 1)
     private Integer number;
-
+    @Phone
     private String zipCode;
 
 }
