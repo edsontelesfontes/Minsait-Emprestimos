@@ -50,6 +50,7 @@ A arquitetura da nossa plataforma é constituida por:
 
 ##### Design Patterns
 * Strategy
+* DTO (Data transfer object)
 
 ---- -- -- -- 
 Para a nossa demonstração estamos interagindo com nossa api diretamente atrvés do postman, mas também pode ser acessada através do swagger confome url:
