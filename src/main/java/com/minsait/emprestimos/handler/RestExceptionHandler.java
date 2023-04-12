@@ -19,7 +19,8 @@ public class RestExceptionHandler {
                         .timestamp(LocalDateTime.now())
                         .status(HttpStatus.BAD_REQUEST.value())
                         .title("Client already exists")
-                        .Details(clientAlreadyExitsException.getClass().getName())
+                        .details(clientAlreadyExitsException.getClass().getName())
+                        .message(clientAlreadyExitsException.getMessage())
                         .build(),HttpStatus.BAD_REQUEST);
     }
 
@@ -30,8 +31,9 @@ public class RestExceptionHandler {
                         .builder()
                         .timestamp(LocalDateTime.now())
                         .status(HttpStatus.BAD_REQUEST.value())
-                        .title("Client already exists")
-                        .Details(clientCantBeNullException.getClass().getName())
+                        .title("Client can't be null")
+                        .details(clientCantBeNullException.getClass().getName())
+                        .message(clientCantBeNullException.getMessage())
                         .build(),HttpStatus.BAD_REQUEST);
     }
 
@@ -42,8 +44,9 @@ public class RestExceptionHandler {
                         .builder()
                         .timestamp(LocalDateTime.now())
                         .status(HttpStatus.BAD_REQUEST.value())
-                        .title("Client already exists")
-                        .Details(clientNotFoundException.getClass().getName())
+                        .title("Client not found")
+                        .details(clientNotFoundException.getClass().getName())
+                        .message(clientNotFoundException.getMessage())
                         .build(),HttpStatus.BAD_REQUEST);
     }
 
@@ -54,8 +57,9 @@ public class RestExceptionHandler {
                         .builder()
                         .timestamp(LocalDateTime.now())
                         .status(HttpStatus.BAD_REQUEST.value())
-                        .title("Client already exists")
-                        .Details(clientWithoutLimit.getClass().getName())
+                        .title("Client without limit")
+                        .details(clientWithoutLimit.getClass().getName())
+                        .message(clientWithoutLimit.getMessage())
                         .build(),HttpStatus.BAD_REQUEST);
     }
 
@@ -66,20 +70,22 @@ public class RestExceptionHandler {
                         .builder()
                         .timestamp(LocalDateTime.now())
                         .status(HttpStatus.BAD_REQUEST.value())
-                        .title("Client already exists")
-                        .Details(loanCantBeEqualsZeroExeception.getClass().getName())
+                        .title("Loan can't be equals zero")
+                        .details(loanCantBeEqualsZeroExeception.getClass().getName())
+                        .message(loanCantBeEqualsZeroExeception.getMessage())
                         .build(),HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(LoanNotFoundException.class)
-    public ResponseEntity<LoanNotFoundExceptionDetails>  handlerLoanNotFound(LoanNotFoundException LoanNotFoundException){
+    public ResponseEntity<LoanNotFoundExceptionDetails>  handlerLoanNotFound(LoanNotFoundException loanNotFoundException){
         return new ResponseEntity<>(
                 LoanNotFoundExceptionDetails
                         .builder()
                         .timestamp(LocalDateTime.now())
                         .status(HttpStatus.BAD_REQUEST.value())
-                        .title("Client already exists")
-                        .Details(LoanNotFoundException.getClass().getName())
+                        .title("Loan not found")
+                        .details(loanNotFoundException.getMessage())
+                        .message(loanNotFoundException.getClass().getName())
                         .build(),HttpStatus.BAD_REQUEST);
     }
 }

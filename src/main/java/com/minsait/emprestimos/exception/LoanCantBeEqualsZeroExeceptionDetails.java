@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class LoanCantBeEqualsZeroExeceptionDetails extends RuntimeException{
     private String title;
     private Integer status;
-    private String Details;
-    private String sistemMessage;
+    private String details;
+    private String message;
     private LocalDateTime timestamp;
 }
