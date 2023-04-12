@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.List;
 
 @Service
@@ -78,7 +79,7 @@ public class LoanService {
     public BigDecimal getTotalLoan(String cpf) {
         List<Loan> allLoans = loanRepository.findByCpf(cpf);
 
-        BigDecimal sum = new BigDecimal(0);
+        BigDecimal sum = new BigDecimal(0, MathContext.DECIMAL32);
 
         for (Loan loans : allLoans) {
 
@@ -92,16 +93,18 @@ public class LoanService {
         return sum;
     }
 
-    public Boolean getLimit(String cpf, BigDecimal loanAmout) {
+    public Boolean getLimit(String cpf, BigDecimal loanAmount) {
         Client client = clientRepository.findByCpf(cpf);
 
-        BigDecimal totalInLoan = getTotalLoan(cpf);
-        BigDecimal salary = client.getSalary().multiply(new BigDecimal(10));
-
-        if (loanAmout.compareTo(salary) < 0 && totalInLoan.compareTo(loanAmout) < 0) {
+        BigDecimal totalLoans = getTotalLoan(cpf);
+        BigDecimal salary = client.getSalary().multiply(new BigDecimal(10), MathContext.DECIMAL32);
+        System.out.println(salary);
+        System.out.println(loanAmount);
+        //if (loanAmout.compareTo(salary) < 0 && totalInLoan.compareTo(loanAmout) < 0) {
+        if (loanAmount.compareTo(salary) <= 0 && totalLoans.add(loanAmount).compareTo(salary) <= 0) {
             return true;
-        } else
+        } else {
             throw new ClientWithoutLimit("No limit for a new loan !");
-    }
-    }
+        }
+    }}
 
