@@ -82,16 +82,16 @@ POST:/api/v1/clientes
 ```
 ```
 {
-  "name": "string",
+  "nome": "string",
   "cpf": "string",
-  "phoneNumber": "stringst",
+  "telefone": "string",
   "endereco": {
-    "street": "string",
-    "number": 1,
-    "zipCode": "string"
+    "rua": "string",
+    "numero": 1,
+    "cep": "string"
   },
-  "salary": 1320,
-  "clientType": "BRONZE"
+  "rendimentoMensal": 1320,
+  "relacionamento": "BRONZE"
 }
 ```
 2. Consultando a lista de clientes.
@@ -110,7 +110,7 @@ PUT:/api/v1/clientes/{cpf}
 ```
 Exemplo
 {
-  "phoneNumber": "string",
+  "telefone": "string",
 }
 ```
 
@@ -129,11 +129,10 @@ POST:/api/v1/clientes/{cpf}/emprestimos
 ```
 ```
 {
-  "cpf": "string",
-  "loanAmount": 2,
-  "enumClientType": "BRONZE",
-  "endDate": "2023-04-12"
+  "valorInicial": 2,
+  "dataFinal": "2023-04-13"
 }
+PS: OS OUTROS ATRIBUTOS SÂO COMPOSTOS ATRAVÉS DO CPF NA URL
 ```
 2. Procurando todos os empréstimos através de um CPF
 ```
