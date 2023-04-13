@@ -1,6 +1,7 @@
 package com.minsait.emprestimos.resources;
 
 import com.minsait.emprestimos.validation.constraints.Phone;
+import com.minsait.emprestimos.validation.constraints.ZipCode;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +20,8 @@ public class AddressPostRequestBody {
     private String rua;
     @Min(value = 1)
     private Integer numero;
-    @Phone
+    @NotBlank(message = "Cep cant be null or empty")
+    @ZipCode
     private String cep;
 
 }
