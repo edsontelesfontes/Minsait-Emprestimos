@@ -1,15 +1,15 @@
 package com.minsait.emprestimos.repository;
 
-import com.minsait.emprestimos.model.Loan;
+import com.minsait.emprestimos.model.Emprestimo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface LoanRepository extends JpaRepository<Loan, Long> {
+public interface LoanRepository extends JpaRepository<Emprestimo, Long> {
 
-    List<Loan> findByCpf(String cpf);
+    List<Emprestimo> findByCpfCliente(String cpf);
 
-    Loan findByIdAndCpf(Long id, String cpf);
+    Emprestimo findByIdAndCpfCliente(Long id, String cpf);
 }

@@ -4,14 +4,13 @@ import com.minsait.emprestimos.exception.ClientAlreadyExitsException;
 import com.minsait.emprestimos.exception.ClientCantBeNullException;
 import com.minsait.emprestimos.exception.ClientNotFoundException;
 import com.minsait.emprestimos.mapper.ClientMapper;
-import com.minsait.emprestimos.model.Client;
+import com.minsait.emprestimos.model.Cliente;
 import com.minsait.emprestimos.repository.ClientRepository;
 import com.minsait.emprestimos.resources.ClientGetRequestBody;
 import com.minsait.emprestimos.resources.ClientPostRequestBody;
 import com.minsait.emprestimos.resources.ClientPutRequestBody;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.Mapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,19 +25,19 @@ public class ClientService {
     }
 
     public ClientGetRequestBody findByCpf(String cpf) {
-        Client client = clientReposity.findByCpf(cpf);
-        if (client != null) {
-            return ClientMapper.INSTANCE.toClientGetResposne(client);
+        Cliente cliente = clientReposity.findByCpf(cpf);
+        if (cliente != null) {
+            return ClientMapper.INSTANCE.toClientGetResposne(cliente);
         } else {
             throw new ClientNotFoundException("Client not found");
         }
     }
 
     @Transactional
-    public Client save(ClientPostRequestBody clientPostRequestBody) {
-        Client client = clientReposity.findByCpf(clientPostRequestBody.getCpf());
-        if (client != null) {
-            throw new ClientAlreadyExitsException("Unavailable to save, client already exists ", client.getCpf());
+    public Cliente save(ClientPostRequestBody clientPostRequestBody) {
+        Cliente cliente = clientReposity.findByCpf(clientPostRequestBody.getCpf());
+        if (cliente != null) {
+            throw new ClientAlreadyExitsException("Unavailable to save, client already exists ", cliente.getCpf());
         }
 
         if (clientPostRequestBody != null) {
@@ -54,9 +53,9 @@ public class ClientService {
     }
 
     @Transactional
-    public Client replace(String cpf, ClientPutRequestBody clientPutRequestBody) {
-        Client clientSaved = ClientMapper.INSTANCE.toClient(findByCpf(cpf));
-        Client client = ClientMapper.INSTANCE.updateClient(clientPutRequestBody, clientSaved);
-        return clientReposity.save(client);
+    public Cliente replace(String cpf, ClientPutRequestBody clientPutRequestBody) {
+        Cliente clienteSaved = ClientMapper.INSTANCE.toClient(findByCpf(cpf));
+        Cliente cliente = ClientMapper.INSTANCE.updateClient(clientPutRequestBody, clienteSaved);
+        return clientReposity.save(cliente);
     }
 }

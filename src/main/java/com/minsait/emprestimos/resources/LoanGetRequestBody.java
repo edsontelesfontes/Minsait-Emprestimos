@@ -2,7 +2,6 @@ package com.minsait.emprestimos.resources;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.minsait.emprestimos.enumeration.EnumClientType;
-import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,14 +17,14 @@ import java.time.LocalDate;
 public class LoanGetRequestBody {
 
     private Long id;
-    private String cpf;
-    private BigDecimal totalAmount;
-    private BigDecimal loanAmount;
+    private String cpfCliente;
+    private BigDecimal valorFinal;
+    private BigDecimal valorInicial;
 
-    private EnumClientType enumClientType;
+    private EnumClientType relacionamento;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDate startDate;
+    private LocalDate dataInicial;
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDate endDate;
+    private LocalDate dataFinal;
 }

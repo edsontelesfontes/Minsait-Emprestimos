@@ -1,12 +1,11 @@
 package com.minsait.emprestimos.controller;
 
-import com.minsait.emprestimos.model.Loan;
+import com.minsait.emprestimos.model.Emprestimo;
 import com.minsait.emprestimos.resources.LoanGetRequestBody;
 import com.minsait.emprestimos.resources.LoanPostRequestBody;
 import com.minsait.emprestimos.service.LoanService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.validator.internal.util.Contracts;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/clientes")
 @RequiredArgsConstructor
-public class LoanController {
+public class EmprestimoController {
     private final LoanService loanService;
     @GetMapping(path = "/{cpf}/emprestimos")
     public ResponseEntity<List<LoanGetRequestBody>> findAllContractsByClient(@PathVariable String cpf){
@@ -28,7 +27,7 @@ public class LoanController {
         return ResponseEntity.ok(loanService.findLoanById(cpf, id));
     }
     @PostMapping(path = "/{cpf}/emprestimos")
-    public ResponseEntity<Loan> saveLoan(@PathVariable String cpf, @RequestBody @Valid LoanPostRequestBody loanPostRequestBody){
+    public ResponseEntity<Emprestimo> saveLoan(@PathVariable String cpf, @RequestBody @Valid LoanPostRequestBody loanPostRequestBody){
         return ResponseEntity.ok(loanService.saveLoan(cpf, loanPostRequestBody));
     }
 

@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddressPutRequestBody {
-    private String street;
-    private Integer number;
+    private String rua;
+    private Integer numero;
 
-    private String zipCode;
+    private String cep;
 
 }

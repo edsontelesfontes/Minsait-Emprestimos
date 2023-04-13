@@ -5,8 +5,8 @@ import com.minsait.emprestimos.exception.ClientWithoutLimit;
 import com.minsait.emprestimos.exception.LoanCantBeEqualsZeroExeception;
 import com.minsait.emprestimos.exception.LoanNotFoundException;
 import com.minsait.emprestimos.mapper.LoanMapper;
-import com.minsait.emprestimos.model.Client;
-import com.minsait.emprestimos.model.Loan;
+import com.minsait.emprestimos.model.Cliente;
+import com.minsait.emprestimos.model.Emprestimo;
 import com.minsait.emprestimos.repository.ClientRepository;
 import com.minsait.emprestimos.repository.LoanRepository;
 import com.minsait.emprestimos.resources.LoanGetRequestBody;
@@ -26,18 +26,18 @@ public class LoanService {
     private final ClientRepository clientRepository;
 
     public List<LoanGetRequestBody> findAllLoanByCpf(String cpf) {
-        List<Loan> loans = loanRepository.findByCpf(cpf);
-        if (loans != null) {
-            return LoanMapper.INSTANCE.toLoanGetRequestBody(loans);
+        List<Emprestimo> emprestimos = loanRepository.findByCpfCliente(cpf);
+        if (emprestimos != null) {
+            return LoanMapper.INSTANCE.toLoanGetRequestBody(emprestimos);
         } else {
             throw new LoanNotFoundException("Loan(s) not found in CPF: ", cpf);
         }
     }
 
     public LoanGetRequestBody findLoanById(String cpf, Long id) {
-        Loan loan = loanRepository.findByIdAndCpf(id, cpf);
-        if (loan != null) {
-            return LoanMapper.INSTANCE.toLoanGetRequestBody(loanRepository.findByIdAndCpf(id, cpf));
+        Emprestimo emprestimo = loanRepository.findByIdAndCpfCliente(id, cpf);
+        if (emprestimo != null) {
+            return LoanMapper.INSTANCE.toLoanGetRequestBody(loanRepository.findByIdAndCpfCliente(id, cpf));
         } else {
             throw new LoanNotFoundException("Loan not found by id ");
         }
@@ -45,17 +45,16 @@ public class LoanService {
     }
 
     @Transactional
-    public Loan saveLoan(String cpf, LoanPostRequestBody loanPostRequestBody) {
-        Client client = clientRepository.findByCpf(cpf);
-        List<Loan> loans = loanRepository.findByCpf(cpf);
-        loanPostRequestBody.setEnumClientType(client.getClientType());
+    public Emprestimo saveLoan(String cpf, LoanPostRequestBody loanPostRequestBody) {
+        Cliente cliente = clientRepository.findByCpf(cpf);
+        List<Emprestimo> emprestimos = loanRepository.findByCpfCliente(cpf);
+        loanPostRequestBody.setRelacionamento(cliente.getRelacionamento());
 
-        if (client != null && getLimit(cpf, loanPostRequestBody.getLoanAmount())) {
-            Loan loanToSave = loanWithTax(LoanMapper.INSTANCE.toLoan(loanPostRequestBody), loans.size());
-            loanToSave.setCpf(cpf);
-            loanToSave.setEnumClientType(client.getClientType());
-            System.out.println(loanToSave.toString());
-            return loanRepository.save(loanToSave);
+        if (cliente != null && getLimit(cpf, loanPostRequestBody.getValorInicial())) {
+            Emprestimo emprestimoToSave = loanWithTax(LoanMapper.INSTANCE.toLoan(loanPostRequestBody), emprestimos.size());
+            emprestimoToSave.setCpfCliente(cpf);
+            emprestimoToSave.setRelacionamento(cliente.getRelacionamento());
+            return loanRepository.save(emprestimoToSave);
         } else {
             throw new ClientNotFoundException("Client with CPF %s not found, unavailable to create a loan.: ", cpf);
         }
@@ -64,37 +63,35 @@ public class LoanService {
 
     @Transactional
     public void deleteLoan(String cpf, Long id) {
-        loanRepository.delete(loanRepository.findByIdAndCpf(id, cpf));
+        loanRepository.delete(loanRepository.findByIdAndCpfCliente(id, cpf));
     }
 
 
-    public Loan loanWithTax(Loan loan, Integer totalLoans) {
-        if (loan.getLoanAmount() != null || loan.getLoanAmount().equals(BigDecimal.ZERO)) {
-            loan.setTotalAmount(loan.getEnumClientType().totalLoan(loan.getLoanAmount(), totalLoans));
+    public Emprestimo loanWithTax(Emprestimo emprestimo, Integer totalLoans) {
+        if (emprestimo.getValorInicial() != null || emprestimo.getValorInicial().equals(BigDecimal.ZERO)) {
+            emprestimo.setValorFinal(emprestimo.getRelacionamento().totalLoan(emprestimo.getValorInicial(), totalLoans));
         } else {
             throw new LoanCantBeEqualsZeroExeception("Amount can't be 0");
         }
-        return loan;
+        return emprestimo;
     }
 
     public BigDecimal getTotalLoan(String cpf) {
-        List<Loan> allLoans = loanRepository.findByCpf(cpf);
+        List<Emprestimo> allEmprestimos = loanRepository.findByCpfCliente(cpf);
 
         BigDecimal sum = new BigDecimal(0, MathContext.DECIMAL32);
 
-        for (Loan loans : allLoans) {
-            sum = sum.add(loans.getLoanAmount());
+        for (Emprestimo loans : allEmprestimos) {
+            sum = sum.add(loans.getValorInicial());
         }
         return sum;
     }
 
     public Boolean getLimit(String cpf, BigDecimal loanAmount) {
-        Client client = clientRepository.findByCpf(cpf);
+        Cliente cliente = clientRepository.findByCpf(cpf);
 
         BigDecimal totalLoans = getTotalLoan(cpf);
-        BigDecimal salary = client.getSalary().multiply(new BigDecimal(10), MathContext.DECIMAL32);
-        System.out.println(salary);
-        System.out.println(loanAmount);
+        BigDecimal salary = cliente.getRendimentoMensal().multiply(new BigDecimal(10), MathContext.DECIMAL32);
         //if (loanAmout.compareTo(salary) < 0 && totalInLoan.compareTo(loanAmout) < 0) {
         if (loanAmount.compareTo(salary) <= 0 && totalLoans.add(loanAmount).compareTo(salary) <= 0) {
             return true;

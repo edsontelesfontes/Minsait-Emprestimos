@@ -16,10 +16,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AddressPostRequestBody {
     @NotBlank(message = "Street cant be null or empty")
-    private String street;
+    private String rua;
     @Min(value = 1)
-    private Integer number;
+    private Integer numero;
     @Phone
-    private String zipCode;
+    private String cep;
 
 }

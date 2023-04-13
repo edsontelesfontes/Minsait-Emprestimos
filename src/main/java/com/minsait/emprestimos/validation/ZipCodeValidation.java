@@ -7,7 +7,7 @@ import jakarta.validation.ConstraintValidatorContext;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ZIpCodeValidation implements ConstraintValidator<ZipCode,String> {
+public class ZipCodeValidation implements ConstraintValidator<ZipCode,String> {
 @Override
 public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
         if (s == null) {

@@ -32,10 +32,10 @@ A arquitetura da nossa plataforma é constituida por:
 
 **Módulos:**
 
-| Módulo     | Definição                                                                                 |
-|------------|-------------------------------------------------------------------------------------------|
-| Cliente    | Módulo contendo as classes necessárias para o registro de novos usuários                  |
-| Empréstimo | Módulo para etapa de um pedido de empréstimo                                            |
+| Módulo     | Definição                                                                |
+|------------|--------------------------------------------------------------------------|
+| Cliente    | Módulo contendo as classes necessárias para o registro de novos clientes |
+| Empréstimo | Módulo para etapa de um pedido de empréstimo                             |
 
 
 ##### Tecnologias
@@ -85,7 +85,7 @@ POST:/api/v1/clientes
   "name": "string",
   "cpf": "string",
   "phoneNumber": "stringst",
-  "address": {
+  "endereco": {
     "street": "string",
     "number": 1,
     "zipCode": "string"

@@ -1,16 +1,11 @@
 package com.minsait.emprestimos.resources;
 
 import com.minsait.emprestimos.enumeration.EnumClientType;
-import com.minsait.emprestimos.model.Address;
-import com.minsait.emprestimos.model.Loan;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import com.minsait.emprestimos.model.Emprestimo;
+import com.minsait.emprestimos.model.Endereco;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.br.CPF;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,12 +14,13 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class ClientGetRequestBody {
-    private String name;
+    private String nome;
     private String cpf;
-    private String phoneNumber;
-    private AddressGetRequestBody address;
-    private BigDecimal salary;
-    private EnumClientType clientType;
+    private String telefone;
+    private Endereco endereco;
+    private BigDecimal rendimentoMensal;
 
-    private List<Loan> loan;
+    private EnumClientType relacionamento;
+
+    private List<Emprestimo> emprestimo;
 }

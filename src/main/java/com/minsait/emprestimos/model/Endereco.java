@@ -1,7 +1,6 @@
 package com.minsait.emprestimos.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,16 +10,16 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Address {
+public class Endereco {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String street;
+    private String rua;
     @Column(nullable = false)
-    private Integer number;
+    private Integer numero;
     @Column(nullable = false)
-    private String zipCode;
+    private String cep;
 
 }

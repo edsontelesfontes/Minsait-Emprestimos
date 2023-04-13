@@ -14,23 +14,23 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Client {
+public class Cliente {
 
     @Column(nullable = false)
-    private String name;
+    private String nome;
     @Id
     @Column(unique = true, nullable = false)
     private String cpf;
     @Column(nullable = false)
-    private String phoneNumber;
+    private String telefone;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_address")
-    private Address address;
-    private BigDecimal salary;
+    private Endereco endereco;
+    private BigDecimal rendimentoMensal;
 
-    private EnumClientType clientType;
+    private EnumClientType relacionamento;
 
-    @OneToMany(mappedBy = "cpf")
-    private List<Loan> loan;
+    @OneToMany(mappedBy = "cpfCliente")
+    private List<Emprestimo> emprestimo;
 
 }

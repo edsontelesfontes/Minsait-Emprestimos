@@ -1,6 +1,6 @@
 package com.minsait.emprestimos.controller;
 
-import com.minsait.emprestimos.model.Client;
+import com.minsait.emprestimos.model.Cliente;
 import com.minsait.emprestimos.resources.ClientGetRequestBody;
 import com.minsait.emprestimos.resources.ClientPostRequestBody;
 import com.minsait.emprestimos.resources.ClientPutRequestBody;
@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/clientes")
 @RequiredArgsConstructor
-public class ClientController {
+public class ClienteController {
 
     private final ClientService clientService;
 
@@ -31,7 +31,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<Client> save(@RequestBody @Valid ClientPostRequestBody clientPostRequestBody){
+    public ResponseEntity<Cliente> save(@RequestBody @Valid ClientPostRequestBody clientPostRequestBody){
         return ResponseEntity.ok(clientService.save(clientPostRequestBody));
     }
 
@@ -43,7 +43,7 @@ public class ClientController {
 
 
     @PutMapping("/{cpf}")
-    public ResponseEntity<Client> replace(@PathVariable String cpf, @RequestBody ClientPutRequestBody clientPutRequestBody){
+    public ResponseEntity<Cliente> replace(@PathVariable String cpf, @RequestBody ClientPutRequestBody clientPutRequestBody){
         return ResponseEntity.ok(clientService.replace(cpf, clientPutRequestBody));
     }
 }
