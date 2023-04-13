@@ -20,7 +20,7 @@ public class ClientPutRequestBody {
 
 
     //private Address address;
-    private AddressPutRequestBody addressPutRequestBody;
+    private AddressPutRequestBody endereco;
     @Min(value = 1319, message = "Please insert a amount superior a minimum wage")
     private BigDecimal rendimentoMensal;
 

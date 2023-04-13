@@ -17,7 +17,7 @@ public class ClientGetRequestBody {
     private String nome;
     private String cpf;
     private String telefone;
-    private Endereco endereco;
+    private AddressGetRequestBody endereco;
     private BigDecimal rendimentoMensal;
 
     private EnumClientType relacionamento;
