@@ -3,9 +3,7 @@ package com.minsait.emprestimos.resources;
 import com.minsait.emprestimos.enumeration.EnumClientType;
 import com.minsait.emprestimos.model.Emprestimo;
 import com.minsait.emprestimos.model.Endereco;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;

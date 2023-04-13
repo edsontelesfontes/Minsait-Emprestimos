@@ -3,9 +3,7 @@ package com.minsait.emprestimos.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.minsait.emprestimos.enumeration.EnumClientType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,7 +12,8 @@ import java.time.LocalDate;
 @Table(name = "tb_loans")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class Emprestimo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

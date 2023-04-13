@@ -4,9 +4,7 @@ import com.minsait.emprestimos.enumeration.EnumClientType;
 import com.minsait.emprestimos.validation.constraints.Phone;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.math.BigDecimal;

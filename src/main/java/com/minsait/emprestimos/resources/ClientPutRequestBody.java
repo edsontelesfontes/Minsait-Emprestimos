@@ -2,9 +2,7 @@ package com.minsait.emprestimos.resources;
 
 import com.minsait.emprestimos.enumeration.EnumClientType;
 import jakarta.validation.constraints.Min;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 @NoArgsConstructor
