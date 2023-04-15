@@ -1,6 +1,7 @@
 package com.minsait.emprestimos.resources;
 
 import com.minsait.emprestimos.enumeration.EnumClientType;
+import com.minsait.emprestimos.validation.constraints.Phone;
 import jakarta.validation.constraints.Min;
 import lombok.*;
 
@@ -10,10 +11,7 @@ import java.math.BigDecimal;
 @Data
 public class ClientPutRequestBody {
 
-    private String nome;
-
-    private String cpf;
-
+    @Phone
     private String telefone;
 
 
