@@ -2,6 +2,7 @@ package com.minsait.emprestimos.resources;
 
 import com.minsait.emprestimos.enumeration.EnumClientType;
 import com.minsait.emprestimos.validation.constraints.Phone;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.*;
 
@@ -11,11 +12,12 @@ import java.math.BigDecimal;
 @Data
 public class ClientPutRequestBody {
 
+    private String nome;
+
     @Phone
     private String telefone;
 
-
-    //private Address address;
+    @Valid
     private AddressPutRequestBody endereco;
     @Min(value = 1319, message = "Please insert a amount superior a minimum wage")
     private BigDecimal rendimentoMensal;
